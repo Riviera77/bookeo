@@ -35,10 +35,31 @@ class Controller
     {
         // cette méthode va inclure le template header, le template demandé et le template footer
         // elle va aussi injecter les paramètres dans le template demandé
-        extract($params);
-        include __DIR__ . '/../../templates/header.php';
-        include __DIR__ . '/../../templates/' . $path . '.php';
-        include __DIR__ . '/../../templates/footer.php';
+        
+        //test en dur
+        //require_once _ROOTHPATH_ . '/templates/page/about.php';
+
+        //je mtn rends la méthode dynamique et donc généraliste
+        $filePath = _ROOTHPATH_ . '/templates/' . $path . '.php';
+
+        try {       
+            // ajout de la méthode files_exists pour vérifier si le fichier existe
+            if (!file_exists($filePath)) {
+                //code throw permet de génerer une erreur
+                throw new \Exception("Fichier introuvable : ".$filePath);
+            } else {
+                /* permet d'extraire les lignes du tableau en les transformant 
+                //en variables pour les rendre accessibles dans le template
+                */
+                extract($params);  
+
+                //inclusion du template demandé
+                require_once $filePath;
+            }          
+            
+        } catch (\Exception $e) {
+            echo $e->getMessage();
+        }       
     }
 
 }

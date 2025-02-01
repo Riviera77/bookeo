@@ -33,7 +33,21 @@ class PageController extends Controller
         /* on pourrait récupérer les données
         en faisant appel au modèle
         */
-        var_dump('on appelle la méthode about');
+
+        // on transmet ce tableau à la VUE
+        $params = [
+            'title' => 'ABC',
+            'description' => 'Bienvenue sur la page à propos'
+        ];
+
+        //var_dump('on appelle la méthode about');
+        //$this->render('page/about', $params);
+
+        // on a aussi la possibilité d'afficher le tableau directement dans la méthode comme dans Symfony
+        $this->render('page/about', [
+            'title' => 'ABC',
+            'description' => 'Bienvenue sur la page à propos'
+        ]);
     }
 
     protected function home()
